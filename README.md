@@ -29,16 +29,16 @@ One short paragraph per chapter, Ch1_2_3 to Ch9. Say what the chapter taught
 you and what surprised you. Not what the library does, but what you understood.
 
 Chapter 4
-  This chapter taught us that raw data usually isn't ready for a model, and that we can build better inputs by combining columns (like Lemonade per Degree), grouping values into bins, or converting categories to numbers. The key idea we took away is that the encoding has to match the category: Little/Medium/Lots has an order, so it gets 0, 1, 2, but Sunny/Cloudy/Rainy has no order, so it needs one-hot. What surprised us is that we first thought everything in the notebook was correct, but when we had it checked, we found a lot of minor errors.
+- This chapter taught us that raw data usually isn't ready for a model, and that we can build better inputs by combining columns (like Lemonade per Degree), grouping values into bins, or converting categories to numbers. The key idea we took away is that the encoding has to match the category: Little/Medium/Lots has an order, so it gets 0, 1, 2, but Sunny/Cloudy/Rainy has no order, so it needs one-hot. What surprised us is that we first thought everything in the notebook was correct, but when we had it checked, we found a lot of minor errors.
 
 Chapter 5
-  This chapter showed us that a model can favor a feature just because its numbers are bigger, like Grades (0 to 100) overpowering Study Hours (0 to 20). StandardScaler sets the mean to 0 and the standard deviation to 1, while MinMaxScaler squeezes everything into 0 to 1. We were surprised again that we trusted the notebook at first, then found minor errors when we double-checked.
+- This chapter showed us that a model can favor a feature just because its numbers are bigger, like Grades (0 to 100) overpowering Study Hours (0 to 20). StandardScaler sets the mean to 0 and the standard deviation to 1, while MinMaxScaler squeezes everything into 0 to 1. We were surprised again that we trusted the notebook at first, then found minor errors when we double-checked.
 
 Chapter 8
-  This chapter taught us to treat preprocessing like a conveyor belt, where each step (imputing, then scaling) runs automatically and in the same order every time. We also understood why fit_transform is used on the training data but only transform on the test data, so the test data doesn't influence what the preprocessor learns. Once more, we were surprised that something we assumed was right had small mistakes.
+- This chapter taught us to treat preprocessing like a conveyor belt, where each step (imputing, then scaling) runs automatically and in the same order every time. We also understood why fit_transform is used on the training data but only transform on the test data, so the test data doesn't influence what the preprocessor learns. Once more, we were surprised that something we assumed was right had small mistakes.
 
 Chapter 9
-  This chapter put everything together on the Titanic data: filling missing values (median for numbers, "missing" for categories), log-transforming the skewed Fare, binning Age, and one-hot encoding the categories. The plots helped us confirm the cleaning worked, like seeing that the missing values were gone. We were surprised that checking our work showed minor errors we would have missed, and also that we could add so many types of graphs to the same notebook, like histograms, count plots, a box plot, and a correlation heatmap, each showing something different about the data.
+- This chapter put everything together on the Titanic data: filling missing values (median for numbers, "missing" for categories), log-transforming the skewed Fare, binning Age, and one-hot encoding the categories. The plots helped us confirm the cleaning worked, like seeing that the missing values were gone. We were surprised that checking our work showed minor errors we would have missed, and also that we could add so many types of graphs to the same notebook, like histograms, count plots, a box plot, and a correlation heatmap, each showing something different about the data.
 
   
 ## Errors we found
