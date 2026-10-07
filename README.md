@@ -51,7 +51,7 @@ Say whether you used an AI tool, and what for. This is not a penalty.
 Hiding it is.
 
 AI Use Disclosure
-- We used an AI tool (Claude) in this activity, for three things:
+- We used an AI tool (Claude) in this activity, for two things:
 
 1. Finding mistakes in the notebooks. We used the prompt below to have the AI review each notebook for silent mistakes. We then checked the findings against our own notebooks. At first we thought everything was correct, but the review showed many minor errors.
 2. Improving our wording. We used the AI to make our sentences clearer and shorter.
