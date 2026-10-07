@@ -8,8 +8,8 @@ Batangas State University, Alangilan Campus
 
 | Name | Student Number | Section |
 |---|---|---|
-| Surname, First Name | | |
-| Surname, First Name | | |
+| Castillo, Christine Dianne | | |
+| Dimapilis, Mc Leejoe | 23-02583 | MEXE 4102 |
 
 ## Notebook links
 
