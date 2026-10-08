@@ -25,9 +25,6 @@ Batangas State University, Alangilan Campus
 
 ## What we learned
 
-One short paragraph per chapter, Ch1_2_3 to Ch9. Say what the chapter taught
-you and what surprised you. Not what the library does, but what you understood.
-
 Chapter 1_2_3
 - In these chapters, we learned how to load, understand, and clean data using Python and Pandas. We learned how to handle missing values, remove duplicates, and get rid of unnecessary data. We also realized that even if we think our code is correct, small mistakes like forgetting to import Pandas or upload the CSV file can cause errors. It taught us to double-check our code and make sure everything is in the right order.
   
@@ -56,8 +53,6 @@ List any mistake you found in the original notebooks, and the correct version.
 There are real ones in there. Finding them earns points.
 
 ## Note on AI tools
-Say whether you used an AI tool, and what for. This is not a penalty.
-Hiding it is.
 
 AI Use Disclosure
 - We used an AI tool (Claude) in this activity, for two things:
