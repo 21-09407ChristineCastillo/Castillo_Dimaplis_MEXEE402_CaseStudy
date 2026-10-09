@@ -66,10 +66,10 @@ Correct version: Cloudy → [1,0,0], Rainy → [0,1,0], Sunny → [0,0,1]
 
 - Mistake 3: Output shows True/False, but the text says 1/0
 
-Cell / Line: “Assigns 1 = True, 0 = False” (page 3), vs. the get_dummies cell
-Original: df_encoded = pd.get_dummies(df_2, columns=['Weather'])
-Why it’s wrong: pandas 2.x returns booleans (True/False), not the 1/0 integers the text describes.
-Correct version: df_encoded = pd.get_dummies(df_2, columns=['Weather'], dtype=int)
+Cell / Line: “Assigns 1 = True, 0 = False” (page 3), vs. the get_dummies cell     
+Original: df_encoded = pd.get_dummies(df_2, columns=['Weather'])     
+Why it’s wrong: pandas 2.x returns booleans (True/False), not the 1/0 integers the text describes.     
+Correct version: df_encoded = pd.get_dummies(df_2, columns=['Weather'], dtype=int)      
 
 - Mistake 4 (optional): “very hot” is never used
 
