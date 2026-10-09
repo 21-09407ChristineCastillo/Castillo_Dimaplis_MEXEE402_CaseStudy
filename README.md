@@ -95,7 +95,7 @@ Mistake 3: Scaling is said to help with feature importance
 - Why it’s wrong: scaling says nothing about feature importance. It only puts features on a comparable range so that larger numbers don’t dominate.  
 - Correct version: Useful when features are measured on very different scales.
 
-  
+<br>
 Chapter 8 Errors  
 Mistake 1: “clean, scaled data ready for ML models” is false  
 - Cell / Line: Bullet under the fit_transform cell, “Result → ...”  
@@ -124,6 +124,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 X_train_transformed = preprocessor.fit_transform(X_train)  
 X_test_transformed = preprocessor.transform(X_test)
 
+<br>
   
 Chapter 9 Errors  
 Mistake 1: The “Before discretization” plot is drawn after binning  
