@@ -74,7 +74,7 @@ Mistake 4: “very hot” is never used
 - Why it’s wrong: the highest temperature, 95, falls in (85, 95], which is “hot”, so no row is ever “very hot”. df.head() only shows 5 of 7 rows, which hides this.            
 - Correct version: bins = [70, 75, 85, 90, 100] (now 91 and 95 become “very hot”)
          
-
+  
 Chapter 5 Errors   
 Mistake 1: The output is called a “dataset”, but it’s a NumPy array
 - Cell / Line: Text under the StandardScaler output, “The outcome is a new dataset where the scales...”  
@@ -94,7 +94,7 @@ Mistake 3: Scaling is said to help with feature importance
 - Why it’s wrong: scaling says nothing about feature importance. It only puts features on a comparable range so that larger numbers don’t dominate.  
 - Correct version: Useful when features are measured on very different scales.
 
-
+  
 Chapter 8 Errors  
 Mistake 1: “clean, scaled data ready for ML models” is false  
 - Cell / Line: Bullet under the fit_transform cell, “Result → ...”  
@@ -123,7 +123,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 X_train_transformed = preprocessor.fit_transform(X_train)  
 X_test_transformed = preprocessor.transform(X_test)
 
-
+  
 Chapter 9 Errors  
 Mistake 1: The “Before discretization” plot is drawn after binning  
 - Cell / Line: Histogram cell with label='Before discretization'
