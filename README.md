@@ -96,6 +96,7 @@ Mistake 3: Scaling is said to help with feature importance
 - Correct version: Useful when features are measured on very different scales.
 
 <br>
+
 Chapter 8 Errors  
 Mistake 1: “clean, scaled data ready for ML models” is false  
 - Cell / Line: Bullet under the fit_transform cell, “Result → ...”  
