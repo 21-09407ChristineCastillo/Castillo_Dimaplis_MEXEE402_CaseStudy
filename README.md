@@ -67,6 +67,46 @@ Where: "Assigns 1 = True, 0 = False" vs. the get_dummies output
 Why it's wrong: pandas 2.x returns booleans, not integers.
 Correct code: pd.get_dummies(df_2, columns=['Weather'], dtype=int)
 
+Chapter 5 Errors 
+- Mistake 1: The output is called a "dataset", but it's a NumPy array
+Original: scaled_data = scaler.fit_transform(df) with the text "The outcome is a new dataset where the scales..."
+Why it's wrong: fit_transform returns a NumPy array, not a DataFrame, so the column names are lost and the printout has no headers.
+Correct: scaled_df = pd.DataFrame(scaled_data, columns=df.columns), then show scaled_df as the last line of the cell.
+
+- Mistake 2: scaler is overwritten
+Original: scaler = MinMaxScaler()
+Why it's wrong: the same name was already used for StandardScaler, so the first fitted scaler is lost. Running cells out of order can silently use the wrong one.
+Correct: standard_scaler = StandardScaler() in the first cell, and minmax_scaler = MinMaxScaler() with normalized_data = minmax_scaler.fit_transform(df_2) in the second.
+
+- Mistake 3: "Helps when unsure about the relative importance of features"
+Why it's wrong: scaling doesn't tell you anything about feature importance. It only puts features on a comparable range so that scale doesn't dominate. This one is a wrong concept in the text.
+Correct: "Useful when features are measured on very different scales."
+
+Chapter 8 Errors 
+
+- Mistake 1: "clean, scaled data ready for ML models" is false
+Original: Result → clean, scaled data ready for ML models.
+Why it's wrong: the original code drops every column except Age and Fare, and Sex and Embarked are still text.
+Correct: Result → Age and Fare are imputed and scaled; the other columns are passed through unchanged (Sex and Embarked still need encoding).
+
+- Mistake 2: remainder is not set
+Original: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])])
+Why it's wrong: the default is remainder='drop', so Pclass, Sex, SibSp, Parch, and Embarked are silently removed.
+Correct: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])], remainder='passthrough')
+
+- Mistake 3: "Pipeline can be reused on new data" is misleading
+Original: Pipeline can be reused on new data for consistent preprocessing.
+Why it's wrong: fit_transform re-learns the mean and std, so new data needs transform.
+Correct: The fitted preprocessor can be reused on new data with transform() (not fit_transform).
+
+- Mistake 4: No train/test split (data leakage)
+Original: X_transformed = preprocessor.fit_transform(X)
+Why it's wrong: the mean and std are learned from rows the model will later be tested on.
+Correct: python
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train_transformed = preprocessor.fit_transform(X_train)
+X_test_transformed = preprocessor.transform(X_test)
+
 
 ## Note on AI tools
 
