@@ -75,7 +75,7 @@ Mistake 4: “very hot” is never used
 - Correct version: bins = [70, 75, 85, 90, 100] (now 91 and 95 become “very hot”)
          
 
-Chapter 5 Errors  
+Chapter 5 Errors   
 Mistake 1: The output is called a “dataset”, but it’s a NumPy array
 - Cell / Line: Text under the StandardScaler output, “The outcome is a new dataset where the scales...”  
 - Original: scaled_data = scaler.fit_transform(df)  
@@ -95,15 +95,15 @@ Mistake 3: Scaling is said to help with feature importance
 - Correct version: Useful when features are measured on very different scales.
 
 
-Chapter 8 Errors 
+Chapter 8 Errors  
 Mistake 1: “clean, scaled data ready for ML models” is false  
 - Cell / Line: Bullet under the fit_transform cell, “Result → ...”  
 - Original: Result → clean, scaled data ready for ML models.  
 - Why it’s wrong: the original code drops every column except Age and Fare, and Sex and Embarked are still text.  
 - Correct version: Result → Age and Fare are imputed and scaled; the other columns are passed through unchanged (Sex and Embarked still need encoding).  
 
-Mistake 2: remainder is not set
-- Cell / Line: ColumnTransformer cell  
+Mistake 2: remainder is not set  
+- Cell / Line: ColumnTransformer cell   
 - Original: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])])  
 - Why it’s wrong: the default is remainder='drop', so Pclass, Sex, SibSp, Parch, and Embarked are silently removed.   
 - Correct version: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])], remainder='passthrough')  
@@ -118,81 +118,73 @@ Mistake 4: No train/test split (data leakage)
 - Cell / Line: Last code cell, fit_transform(X) on the full data
 - Original: X_transformed = preprocessor.fit_transform(X)
 - Why it’s wrong: the mean and std are learned from rows the model will later be tested on.
-Correct version:  
+- Correct version:  
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)  
 X_train_transformed = preprocessor.fit_transform(X_train)  
 X_test_transformed = preprocessor.transform(X_test)
 
 
-Chapter 9 Errors
-Mistake 1: The “Before discretization” plot is drawn after binning
+Chapter 9 Errors  
+Mistake 1: The “Before discretization” plot is drawn after binning  
 - Cell / Line: Histogram cell with label='Before discretization'
 - Original: plt.hist(data['Age'].dropna(), alpha=0.5, label='Before discretization')
 - Why it’s wrong: data['Age'] was already converted by pd.cut, so the plot shows Adult/Elderly/Child bars, not ages.
 - Correct version: plt.hist(raw_data['Age'].dropna(), alpha=0.5, label='Before discretization'), or move the plot above the pd.cut cell.
 
-Mistake 2: The “After discretization” plot uses the wrong column
+Mistake 2: The “After discretization” plot uses the wrong column  
+- Cell / Line: Histogram cell with label='After discretization'
+- Original: plt.hist(titanic_preprocessed[:,2], alpha=0.5, label='After discretization')
+- Why it’s wrong: column 2 is car__Embarked_C, a one-hot column. Age is column 0, and it is scaled, not discretized.
+- Correct version: data['Age'].value_counts().plot(kind='bar')
 
-Cell / Line: Histogram cell with label='After discretization'
-Original: plt.hist(titanic_preprocessed[:,2], alpha=0.5, label='After discretization')
-Why it’s wrong: column 2 is car__Embarked_C, a one-hot column. Age is column 0, and it is scaled, not discretized.
-Correct version: data['Age'].value_counts().plot(kind='bar')
+Mistake 3: Step 1 says Google Drive, but the code uploads a file  
+- Cell / Line: Step 1 heading and cell
+- Original: uploaded = files.upload()
+- Why it’s wrong: the heading says “Connect Google Colab to your Google Drive”, but no Drive mount happens.
+- Correct version: rename the heading to “Upload the Dataset”, or use from google.colab import drive; drive.mount('/content/drive').
 
-Mistake 3: Step 1 says Google Drive, but the code uploads a file
+Mistake 4: Typo in the transformer name  
+- Cell / Line: ColumnTransformer cell
+- Original: ('car', categorical_transformer, categorical_features)
+- Why it’s wrong: it should be cat for categorical. The typo also shows in the output as car__Embarked_C.
+- Correct version: ('cat', categorical_transformer, categorical_features)
 
-Cell / Line: Step 1 heading and cell
-Original: uploaded = files.upload()
-Why it’s wrong: the heading says “Connect Google Colab to your Google Drive”, but no Drive mount happens.
-Correct version: rename the heading to “Upload the Dataset”, or use from google.colab import drive; drive.mount('/content/drive').
+Mistake 5: The log transform on Fare is never done  
+- Cell / Line: Intro list, item 2
+- Original: Data Transformation – apply log transform to Fare (skewed).
+- Why it’s wrong: the code only applies StandardScaler to Fare, so no log transform happens.
+- Correct version: data['Fare_log'] = np.log1p(data['Fare']) (needs import numpy as np; use log1p because the minimum Fare is 0)
 
-Mistake 4: Typo in the transformer name
+Mistake 6: PassengerId is never dropped  
+- Cell / Line: Intro list, item 3
+- Original: Data Reduction – drop irrelevant features like PassengerId.
+- Why it’s wrong: no code does this, and PassengerId still appears in the heatmap, where it is meaningless.
+- Correct version: data = data.drop('PassengerId', axis=1)
 
-Cell / Line: ColumnTransformer cell
-Original: ('car', categorical_transformer, categorical_features)
-Why it’s wrong: it should be cat for categorical. The typo also shows in the output as car__Embarked_C.
-Correct version: ('cat', categorical_transformer, categorical_features)
+Mistake 7: “Dataset is now cleaned, transformed, and ready” is false  
+- Cell / Line: Text after the binning cell
+- Original: Dataset is now cleaned, transformed, and ready for visualization
+- Why it’s wrong: preprocessor.fit_transform(data) never modifies data. The binned Age still has 177 NaN values, and Cabin (687 missing) and Embarked (2 missing) are untouched.
+- Correct version: The preprocessed array is stored in titanic_preprocessed. The Age column in data is binned, and its 177 missing values stay NaN.
 
-Mistake 5: The log transform on Fare is never done
+Mistake 8: Histogram and KDE on binned (categorical) Age  
+- Cell / Line: Age distribution plot
+- Original: sns.histplot(data=data, x='Age', hue='Survived', bins=30, kde=True)
+- Why it’s wrong: bins=30 and kde=True mean nothing for 3 categories. The KDE curve peaks near 1150, higher than any bar, and the 177 NaN ages are silently skipped.
+- Correct version: sns.countplot(x='Age', hue='Survived', data=data)
 
-Cell / Line: Intro list, item 2
-Original: Data Transformation – apply log transform to Fare (skewed).
-Why it’s wrong: the code only applies StandardScaler to Fare, so no log transform happens.
-Correct version: data['Fare_log'] = np.log1p(data['Fare']) (needs import numpy as np; use log1p because the minimum Fare is 0)
+Mistake 9: The text says Sex has missing values  
+- Cell / Line: Step 3 bullets, Data Cleaning
+- Original: Embarked, Sex → replace with "missing"
+- Why it’s wrong: Sex has 891 non-null values, so only Embarked (2 missing) needs it.
+- Correct version: Embarked → replace with "missing"
 
-Mistake 6: PassengerId is never dropped
+Mistake 10: The Data Quality Report has no “before”  
+- Cell / Line: Data Quality Report cell and text
+- Original: compare the number of missing values before and after preprocessing
+- Why it’s wrong: only the after count is printed, so nothing can be compared.
+- Correct version: add print(data.isnull().sum()) before preprocessing.
 
-Cell / Line: Intro list, item 3
-Original: Data Reduction – drop irrelevant features like PassengerId.
-Why it’s wrong: no code does this, and PassengerId still appears in the heatmap, where it is meaningless.
-Correct version: data = data.drop('PassengerId', axis=1)
-
-Mistake 7: “Dataset is now cleaned, transformed, and ready” is false
-
-Cell / Line: Text after the binning cell
-Original: Dataset is now cleaned, transformed, and ready for visualization
-Why it’s wrong: preprocessor.fit_transform(data) never modifies data. The binned Age still has 177 NaN values, and Cabin (687 missing) and Embarked (2 missing) are untouched.
-Correct version: The preprocessed array is stored in titanic_preprocessed. The Age column in data is binned, and its 177 missing values stay NaN.
-
-Mistake 8: Histogram and KDE on binned (categorical) Age
-
-Cell / Line: Age distribution plot
-Original: sns.histplot(data=data, x='Age', hue='Survived', bins=30, kde=True)
-Why it’s wrong: bins=30 and kde=True mean nothing for 3 categories. The KDE curve peaks near 1150, higher than any bar, and the 177 NaN ages are silently skipped.
-Correct version: sns.countplot(x='Age', hue='Survived', data=data)
-
-Mistake 9: The text says Sex has missing values
-
-Cell / Line: Step 3 bullets, Data Cleaning
-Original: Embarked, Sex → replace with "missing"
-Why it’s wrong: Sex has 891 non-null values, so only Embarked (2 missing) needs it.
-Correct version: Embarked → replace with "missing"
-
-Mistake 10: The Data Quality Report has no “before”
-
-Cell / Line: Data Quality Report cell and text
-Original: compare the number of missing values before and after preprocessing
-Why it’s wrong: only the after count is printed, so nothing can be compared.
-Correct version: add print(data.isnull().sum()) before preprocessing.
 
 ## Note on AI tools
 
