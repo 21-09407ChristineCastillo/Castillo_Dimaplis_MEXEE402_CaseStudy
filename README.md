@@ -73,8 +73,9 @@ Mistake 4: “very hot” is never used
 - Original: bins = [70, 75, 85, 95, 100]                 
 - Why it’s wrong: the highest temperature, 95, falls in (85, 95], which is “hot”, so no row is ever “very hot”. df.head() only shows 5 of 7 rows, which hides this.            
 - Correct version: bins = [70, 75, 85, 90, 100] (now 91 and 95 become “very hot”)
-         
-  
+
+<br>
+
 Chapter 5 Errors   
 Mistake 1: The output is called a “dataset”, but it’s a NumPy array
 - Cell / Line: Text under the StandardScaler output, “The outcome is a new dataset where the scales...”  
