@@ -50,42 +50,29 @@ Chapter 9
 ## Errors we found
 
 Chapter 1_2_3 Errors
-# Chapters 1-3 Errors
+Mistake 1: Duplicate check can never find duplicates
+- Where: Removing Redundancies, df.duplicated() cell
+- Original: df.duplicated().sum() → 0, then drop_duplicates() → 0
+- Why it's wrong: Rank is unique for every row, so no two full rows can match. The check always returns 0, whatever the data contains.
+- Correct: df.duplicated(subset=['Name', 'Platform', 'Year', 'Genre', 'Publisher']).sum() (or drop Rank before checking)
 
-**Mistake 1: Duplicate check can never find duplicates**
-
-- Where: Removing Redundancies, `df.duplicated()` cell
-- Original: `df.duplicated().sum()` → 0, then `drop_duplicates()` → 0
-- Why it's wrong: `Rank` is unique for every row, so no two full rows can match. The check always returns 0, whatever the data contains.
-- Correct: `df.duplicated(subset=['Name', 'Platform', 'Year', 'Genre', 'Publisher']).sum()` (or drop `Rank` before checking)
-
-**Mistake 2: Mean imputation gives a fractional year**
-
-- Where: Imputation markdown vs. the `fillna` cell
-- Original: Year (numeric) → mean imputation, `df['Year'].fillna(df['Year'].mean())`
+Mistake 2: Mean imputation gives a fractional year
+- Where: Imputation markdown vs. the fillna cell
+- Original: Year (numeric) → mean imputation, df['Year'].fillna(df['Year'].mean())
 - Why it's wrong: The mean fills the 271 missing years with 2006.406443, which isn't a valid year, and it hides that the dates are unknown.
-- Correct: `df['Year'] = df['Year'].fillna(df['Year'].median())` (or use the mode, or leave as NaN and use `astype('Int64')`)
+- Correct: df['Year'] = df['Year'].fillna(df['Year'].median()) (or use the mode, or leave as NaN and use astype('Int64')`)
 
-**Mistake 3: Real best-sellers removed as "outliers"**
-
-- Where: Noisy Data markdown vs. the `Global_Sales <= 40` cell
+Mistake 3: Real best-sellers removed as "outliers"
+- Where: Noisy Data markdown vs. the Global_Sales <= 40 cell
 - Original: "Treat games with Global Sales > 40M as outliers and remove them"
-- Why it's wrong: This deletes Wii Sports (82.74M) and Super Mario Bros. (40.24M). The `head()` output now starts at index 2. These are genuine values, not errors, and the 40M cutoff is arbitrary.
+- Why it's wrong: This deletes Wii Sports (82.74M) and Super Mario Bros. (40.24M). The head() output now starts at index 2. These are genuine values, not errors, and the 40M cutoff is arbitrary.
 - Correct: Keep them, or use a justified rule (e.g. IQR or a log-transform) and say why.
 
-**Mistake 4: Deletion step removes nothing**
-
+Mistake 4: Deletion step removes nothing
 - Where: Deletion cell vs. the Imputation cell
-- Original: `df = df[df['Publisher'].notna()]`
-- Why it's wrong: `Publisher` was already filled with the mode in the cell above, so there are no missing values left to delete. Imputation and deletion are alternatives, not sequential steps.
-- Correct: Choose one strategy per column, e.g. delete the 58 rows with `df.dropna(subset=['Publisher'])` instead of imputing.
-
-**Mistake 5: `inplace=True` on a column**
-
-- Where: Imputation `fillna` cell (see the FutureWarning in the output)
-- Original: `df['Year'].fillna(..., inplace=True)`
-- Why it's wrong: This is chained assignment. In pandas 3.0 it will not modify `df` at all.
-- Correct: `df['Year'] = df['Year'].fillna(df['Year'].median())` and `df['Publisher'] = df['Publisher'].fillna('Unknown')`
+- Original: df = df[df['Publisher'].notna()]`
+- Why it's wrong: Publisher was already filled with the mode in the cell above, so there are no missing values left to delete. Imputation and deletion are alternatives, not sequential steps.
+- Correct: Choose one strategy per column, e.g. delete the 58 rows with df.dropna(subset=['Publisher']) instead of imputing.
   
 Chapter 4 Errors 
 Mistake 1: Ordinal encoding values don’t match the code              
@@ -133,7 +120,7 @@ Mistake 3: Scaling is said to help with feature importance
 - Why it’s wrong: scaling says nothing about feature importance. It only puts features on a comparable range so that larger numbers don’t dominate.  
 - Correct version: Useful when features are measured on very different scales.
 
-<br>
+Chapter 6 Errors
 
 Chapter 8 Errors  
 Mistake 1: “clean, scaled data ready for ML models” is false  
