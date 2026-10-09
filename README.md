@@ -77,22 +77,19 @@ Correct version: bins = [70, 75, 85, 90, 100] (now 91 and 95 become “very hot�
 
 Chapter 5 Errors  
 
-- Mistake 1: The output is called a “dataset”, but it’s a NumPy array  
-
+- Mistake 1: The output is called a “dataset”, but it’s a NumPy array
 Cell / Line: Text under the StandardScaler output, “The outcome is a new dataset where the scales...”  
 Original: scaled_data = scaler.fit_transform(df)  
 Why it’s wrong: fit_transform returns a NumPy array, not a DataFrame, so the column names are lost and the printout has no headers.  
 Correct version: scaled_df = pd.DataFrame(scaled_data, columns=df.columns), then show scaled_df as the last line of the cell.  
 
-- Mistake 2: scaler is overwritten
-
+- Mistake 2: scaler is overwritte
 Cell / Line: “normalize the data” cell  
 Original: scaler = MinMaxScaler()  
 Why it’s wrong: the same name was already used for StandardScaler, so the first fitted scaler is lost. Running cells out of order can silently use the wrong one.  
 Correct version: standard_scaler = StandardScaler() in the first cell, and minmax_scaler = MinMaxScaler() with normalized_data = minmax_scaler.fit_transform(df_2) in the second.  
 
-- Mistake 3: Scaling is said to help with feature importance  
-
+- Mistake 3: Scaling is said to help with feature importance
 Cell / Line: 4th bullet under “Data Normalization”  
 Original: Helps when unsure about the relative importance of features.  
 Why it’s wrong: scaling says nothing about feature importance. It only puts features on a comparable range so that larger numbers don’t dominate.  
