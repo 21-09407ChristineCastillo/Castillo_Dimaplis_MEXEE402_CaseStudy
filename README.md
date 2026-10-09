@@ -49,8 +49,24 @@ Chapter 9
   
 ## Errors we found
 
-List any mistake you found in the original notebooks, and the correct version.
-There are real ones in there. Finding them earns points.
+Chapter 4 Errors 
+- Mistake 1: Ordinal encoding values don't match the code
+Where: Ordinal Encoding markdown vs. the OrdinalEncoder cell
+Original: Little → 1, Medium → 2, Lots → 3
+Why it's wrong: OrdinalEncoder starts at 0, and the output shows 0.0, 1.0, 2.0.
+Correct: Little → 0, Medium → 1, Lots → 2
+
+- Mistake 2: One-hot example doesn't match the column order
+Where: One-hot Encoding markdown vs. the pd.get_dummies output
+Original: Sunny → [1,0,0], Cloudy → [0,1,0], Rainy → [0,0,1]
+Why it's wrong: get_dummies orders the columns alphabetically (Cloudy, Rainy, Sunny), not in order of appearance.
+Correct: Cloudy → [1,0,0], Rainy → [0,1,0], Sunny → [0,0,1]
+
+- Mistake 3: Output shows True/False, but the text says 1/0
+Where: "Assigns 1 = True, 0 = False" vs. the get_dummies output
+Why it's wrong: pandas 2.x returns booleans, not integers.
+Correct code: pd.get_dummies(df_2, columns=['Weather'], dtype=int)
+
 
 ## Note on AI tools
 
