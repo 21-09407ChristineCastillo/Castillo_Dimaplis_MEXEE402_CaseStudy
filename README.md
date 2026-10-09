@@ -1,4 +1,4 @@
-# MexEE 402: Data Preprocessing Case Study
+ # MexEE 402: Data Preprocessing Case Study
 
 MexEE Elective 2: Data Science and Machine Learning
 Batangas State University, Alangilan Campus
@@ -97,28 +97,30 @@ Correct version: Useful when features are measured on very different scales.
 
 Chapter 8 Errors 
 
-- Mistake 1: "clean, scaled data ready for ML models" is false
-Original: Result → clean, scaled data ready for ML models.
-Why it's wrong: the original code drops every column except Age and Fare, and Sex and Embarked are still text.
-Correct: Result → Age and Fare are imputed and scaled; the other columns are passed through unchanged (Sex and Embarked still need encoding).
+Mistake 1: “clean, scaled data ready for ML models” is false  
+- Cell / Line: Bullet under the fit_transform cell, “Result → ...”  
+- Original: Result → clean, scaled data ready for ML models.  
+- Why it’s wrong: the original code drops every column except Age and Fare, and Sex and Embarked are still text.  
+- Correct version: Result → Age and Fare are imputed and scaled; the other columns are passed through unchanged (Sex and Embarked still need encoding).  
 
-- Mistake 2: remainder is not set
-Original: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])])
-Why it's wrong: the default is remainder='drop', so Pclass, Sex, SibSp, Parch, and Embarked are silently removed.
-Correct: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])], remainder='passthrough')
+Mistake 2: remainder is not set
+- Cell / Line: ColumnTransformer cell  
+- Original: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])])  
+- Why it’s wrong: the default is remainder='drop', so Pclass, Sex, SibSp, Parch, and Embarked are silently removed.   
+- Correct version: ColumnTransformer(transformers=[('age_fare', pipeline, ['Age', 'Fare'])], remainder='passthrough')  
 
-- Mistake 3: "Pipeline can be reused on new data" is misleading
-Original: Pipeline can be reused on new data for consistent preprocessing.
-Why it's wrong: fit_transform re-learns the mean and std, so new data needs transform.
-Correct: The fitted preprocessor can be reused on new data with transform() (not fit_transform).
+Mistake 3: “Pipeline can be reused on new data” is misleading  
+- Cell / Line: Last bullet under the ColumnTransformer explanation
+- Original: Pipeline can be reused on new data for consistent preprocessing.
+- Why it’s wrong: fit_transform re-learns the mean and std, so new data needs transform.
+- Correct version: The fitted preprocessor can be reused on new data with transform() (not fit_transform).
 
-- Mistake 4: No train/test split (data leakage)
+Mistake 4: No train/test split (data leakage)
+
+Cell / Line: Last code cell, fit_transform(X) on the full data
 Original: X_transformed = preprocessor.fit_transform(X)
-Why it's wrong: the mean and std are learned from rows the model will later be tested on.
-Correct: python
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-X_train_transformed = preprocessor.fit_transform(X_train)
-X_test_transformed = preprocessor.transform(X_test)
+Why it’s wrong: the mean and std are learned from rows the model will later be tested on.
+Correct version:
 
 
 ## Note on AI tools
