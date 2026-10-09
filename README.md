@@ -123,41 +123,40 @@ Mistake 3: Scaling is said to help with feature importance
 Chapter 6 Errors
 Mistake 1: Z-score output contradicts the text
 Where: Z-score “find outliers” cell vs. the markdown below it
-Original: Output is Outliers: [], but the markdown says “the number 100 is a clear outlier”
-Why it’s wrong: The z-score of 100 is 2.615, which is inside [-3, 3], so the method does not flag it. The notebook then claims it did.
-Correct: State that the z-score method missed the outlier here, and show the IQR method catching it. Or use a threshold of 2 (np.abs(z_scores) > 2).
+- Original: Output is Outliers: [], but the markdown says “the number 100 is a clear outlier”
+- Why it’s wrong: The z-score of 100 is 2.615, which is inside [-3, 3], so the method does not flag it. The notebook then claims it did.
+- Correct: State that the z-score method missed the outlier here, and show the IQR method catching it. Or use a threshold of 2 (np.abs(z_scores) > 2).
+- 
 Mistake 2: Z-score threshold of 3 is impossible with this data
-Where: Z-score markdown (“Values outside [-3, 3] are usually considered outliers”) vs. the 8-value example
+ — Where: Z-score markdown (“Values outside [-3, 3] are usually considered outliers”) vs. the 8-value example
 Original: Uses > 3 on an array of only 8 numbers
-Why it’s wrong: With n = 8, the largest possible z-score is √(n−1) ≈ 2.65 (stats.zscore uses the population std), so nothing can ever exceed 3, even with an extreme value. The rule of 3 only works on larger samples.
-Correct: Use a larger dataset for the demo, or explain that z-scores are unreliable on small samples. The outlier also inflates the mean and std, which masks itself.
+- Why it’s wrong: With n = 8, the largest possible z-score is √(n−1) ≈ 2.65 (stats.zscore uses the population std), so nothing can ever exceed 3, even with an extreme value. The rule of 3 only works on larger samples.
+- Correct: Use a larger dataset for the demo, or explain that z-scores are unreliable on small samples.
+- 
 Mistake 3: The IQR steps don’t match the code
-Where: IQR markdown vs. the data.quantile() cell
-Original: Q1 = median of lower half, Q3 = median of upper half
-Why it’s wrong: By that method, Q1 = 12 and Q3 = 21.5, giving IQR = 9.5. The code uses pandas’ linear interpolation, which gives Q3 = 21.25 and IQR = 9.25. The text and output disagree.
-Correct: Say that quantile() uses linear interpolation, so results can differ slightly from the hand method. Or change the description to match the code.
+- Where: IQR markdown vs. the data.quantile() cell
+- Original: Q1 = median of lower half, Q3 = median of upper half
+- Why it’s wrong: By that method, Q1 = 12 and Q3 = 21.5, giving IQR = 9.5. The code uses pandas’ linear interpolation, which gives Q3 = 21.25 and IQR = 9.25. The text and output disagree.
+- Correct: Say that quantile() uses linear interpolation, so results can differ slightly from the hand method. Or change the description to match the code.
 
 Chapter 7 Errors
 Mistake 1: “Zero correlation” example contradicts the data
-Where: Correlation markdown (“Zero: assignments completed ↔ grades unrelated”) vs. the first df.corr() output
+- Where: Correlation markdown (“Zero: assignments completed ↔ grades unrelated”) vs. the first df.corr() output
 Original: Assignments completed and grades are described as unrelated
-Why it’s wrong: In the example data, Assignments Completed has a 0.9565 correlation with Final Grade, which is strongly positive. It’s actually the highest of the three features.
-Correct: Pick a different example for zero correlation (e.g. shoe size ↔ grades), or change the data so the text matches.
+- Why it’s wrong: In the example data, Assignments Completed has a 0.9565 correlation with Final Grade, which is strongly positive. It’s actually the highest of the three features.
+- Correct: Pick a different example for zero correlation (e.g. shoe size ↔ grades), or change the data so the text matches.
+- 
 Mistake 2: Filter keeps features by raw correlation, not absolute value
-Where: Filter Methods markdown (“drop those with low correlation”) vs. correlations[correlations > 0.5]
-Original: correlations[correlations > 0.5]
-Why it’s wrong: A feature with a strong negative correlation (e.g. -0.9) is just as predictive but would be dropped. The first example in this same chapter had Extracurricular Activities at -0.79.
-Correct: correlations[correlations.abs() > 0.5]
+- Where: Filter Methods markdown (“drop those with low correlation”) vs. correlations[correlations > 0.5]
+- Original: correlations[correlations > 0.5]
+- Why it’s wrong: A feature with a strong negative correlation (e.g. -0.9) is just as predictive but would be dropped. The first example in this same chapter had Extracurricular Activities at -0.79.
+- Correct: correlations[correlations.abs() > 0.5]
+  
 Mistake 3: The target is included in the selected features
-Where: The relevant_features output
-Original: final grade 1.000000 appears in the list of relevant features
-Why it’s wrong: The target’s correlation with itself is always 1.0, so it passes every threshold. It isn’t a feature.
-Correct: correlations.drop('final grade') before filtering.
-Mistake 4: study hours and assignments completed are identical columns
-Where: data_2 definition
-Original: Both columns are [10, 9, 8, 7, 10, 9, 8]
-Why it’s wrong: They’re perfectly duplicated (correlation 1.0), so one adds no information. The filter keeps both, which defeats the purpose of feature selection. It also makes the later methods arbitrary: RFECV keeps assignments completed and Lasso keeps study hours.
-Correct: Change the data so the columns differ, or add a step that removes highly correlated features.
+- Where: The relevant_features output
+- Original: final grade 1.000000 appears in the list of relevant features
+- Why it’s wrong: The target’s correlation with itself is always 1.0, so it passes every threshold. It isn’t a feature.
+- Correct: correlations.drop('final grade') before filtering.
 
 Chapter 8 Errors  
 Mistake 1: “clean, scaled data ready for ML models” is false  
