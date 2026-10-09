@@ -74,7 +74,7 @@ Mistake 4: Deletion step removes nothing
 - Why it's wrong: Publisher was already filled with the mode in the cell above, so there are no missing values left to delete. Imputation and deletion are alternatives, not sequential steps.
 - Correct: Choose one strategy per column, e.g. delete the 58 rows with df.dropna(subset=['Publisher']) instead of imputing.
   
-Chapter 4 Errors 
+Chapter 4 Errors  
 Mistake 1: Ordinal encoding values don’t match the code              
 - Cell / Line: Markdown under “Ordinal Encoding”, vs. the OrdinalEncoder cell output       
 - Original: Little → 1, Medium → 2, Lots → 3       
