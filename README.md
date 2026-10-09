@@ -48,8 +48,8 @@ Chapter 9
 
   
 ## Errors we found
-
 Chapter 1_2_3 Errors
+
 Mistake 1: Duplicate check can never find duplicates
 - Where: Removing Redundancies, df.duplicated() cell
 - Original: df.duplicated().sum() → 0, then drop_duplicates() → 0
