@@ -50,22 +50,33 @@ Chapter 9
 ## Errors we found
 
 Chapter 4 Errors 
-- Mistake 1: Ordinal encoding values don't match the code
-Where: Ordinal Encoding markdown vs. the OrdinalEncoder cell
-Original: Little → 1, Medium → 2, Lots → 3
-Why it's wrong: OrdinalEncoder starts at 0, and the output shows 0.0, 1.0, 2.0.
-Correct: Little → 0, Medium → 1, Lots → 2
 
-- Mistake 2: One-hot example doesn't match the column order
-Where: One-hot Encoding markdown vs. the pd.get_dummies output
+- Mistake 1: Ordinal encoding values don’t match the code
+Cell / Line: Markdown under “Ordinal Encoding” (page 3), vs. the OrdinalEncoder cell output
+Original: Little → 1, Medium → 2, Lots → 3
+Why it’s wrong: OrdinalEncoder starts counting at 0, and the output shows 0.0, 1.0, 2.0.
+Correct version: Little → 0, Medium → 1, Lots → 2
+
+- Mistake 2: One-hot example doesn’t match the column order
+
+Cell / Line: Markdown under “One-hot Encoding” (page 3), vs. the pd.get_dummies output
 Original: Sunny → [1,0,0], Cloudy → [0,1,0], Rainy → [0,0,1]
-Why it's wrong: get_dummies orders the columns alphabetically (Cloudy, Rainy, Sunny), not in order of appearance.
-Correct: Cloudy → [1,0,0], Rainy → [0,1,0], Sunny → [0,0,1]
+Why it’s wrong: get_dummies orders the columns alphabetically (Cloudy, Rainy, Sunny), not by order of appearance.
+Correct version: Cloudy → [1,0,0], Rainy → [0,1,0], Sunny → [0,0,1]
 
 - Mistake 3: Output shows True/False, but the text says 1/0
-Where: "Assigns 1 = True, 0 = False" vs. the get_dummies output
-Why it's wrong: pandas 2.x returns booleans, not integers.
-Correct code: pd.get_dummies(df_2, columns=['Weather'], dtype=int)
+
+Cell / Line: “Assigns 1 = True, 0 = False” (page 3), vs. the get_dummies cell
+Original: df_encoded = pd.get_dummies(df_2, columns=['Weather'])
+Why it’s wrong: pandas 2.x returns booleans (True/False), not the 1/0 integers the text describes.
+Correct version: df_encoded = pd.get_dummies(df_2, columns=['Weather'], dtype=int)
+
+- Mistake 4 (optional): “very hot” is never used
+
+Cell / Line: “define bins and labels” cell (page 2)
+Original: bins = [70, 75, 85, 95, 100]
+Why it’s wrong: the highest temperature, 95, falls in (85, 95], which is “hot”, so no row is ever “very hot”. df.head() only shows 5 of 7 rows, which hides this.
+Correct version: bins = [70, 75, 85, 90, 100] (now 91 and 95 become “very hot”)
 
 Chapter 5 Errors 
 - Mistake 1: The output is called a "dataset", but it's a NumPy array
